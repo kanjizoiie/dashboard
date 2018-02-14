@@ -1,0 +1,15 @@
+.flex-container {
+    display: flex;
+    flex-flow: column wrap;
+    height: 80vh;
+}
+
+.flex-item {
+    margin-top: 2px;
+    margin-right: 2px;
+    display: flex;
+    min-height: 100px;
+    /* Would use just `height` but Firefox is weird */
+    flex: 0 0 auto;
+    width: 25%;
+}

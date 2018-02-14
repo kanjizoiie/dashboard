@@ -1,0 +1,61 @@
+@startuml usecase_server
+'Settings
+left to right direction
+skinparam packageStyle rectangle
+
+
+'Create the rectangle and Endpoint.
+actor Server <<Reports problem>>
+actor User <<Identifies problem>>
+actor Endpoint <<Backend>>
+
+rectangle Dashboard <<Shows collected data>>{
+    Server -- User : Fixes server
+    User -- (ServerView) : Looks at
+    (ServerView) -- Endpoint : Fetches data
+    (NewsView) -- Endpoint : Fetches data
+    (SlackStatusView) -- Endpoint : Fetches data
+}
+@enduml
+
+@startuml usecase_weather
+'Settings
+left to right direction
+skinparam packageStyle rectangle
+
+
+'Create the rectangle and Endpoint.
+actor User <<Makes choice to get lunch>>
+actor Endpoint <<Backend>>
+
+rectangle dashboard <<Shows collected data>>{
+    () WeatherWidget -- (ServerView) : Has
+    () WeatherWidget -- (NewsView) : Has
+    () WeatherWidget -- (SlackStatusView) : Has
+    User -- () WeatherWidget : Looks at
+    (ServerView) -- Endpoint : Fetches data
+    (NewsView) -- Endpoint : Fetches data
+    (SlackStatusView) -- Endpoint : Fetches data
+}
+@enduml
+
+@startuml Dashboard
+start
+split
+    :Starting **DataFetcher**;
+    :Create **database** instance;
+    repeat
+        :**Fetch data**;
+    repeat while (Timeout?)
+    stop
+split again
+    :Setup express;
+    :Setup **route**;
+    while (app.listen())
+        if (Request route?) then (yes)
+            :Serve route;
+        else (no)
+        endif
+    endwhile
+    stop
+@enduml
