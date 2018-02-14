@@ -26,7 +26,7 @@ export class StatusView extends Component {
         }).catch((reason) => {
             console.log(reason);
         });
-        this.timeOut = setTimeout(() => this.getData(), 10000);
+        this.timeOut = setTimeout(() => this.getData(), 45000);
     }
 
     getDot(presence) {
@@ -44,7 +44,7 @@ export class StatusView extends Component {
                             this.state.status.map((comp, i) => {
                                 return (
                                     <div className = 'status' key = { i }>
-                                        { this.getDot(comp.presence) }<h2> { emoji.emojify(comp.real_name + ': ' + comp.emoji + ' ' + comp.text)  } </h2>
+                                        { this.getDot(comp[1].presence) }<h2> { emoji.emojify(comp[0].user.profile.real_name + ': ' + comp[0].user.profile.status_emoji + ' ' + comp[0].user.profile.status_text)  } </h2>
                                     </div>
                                 )
                             })

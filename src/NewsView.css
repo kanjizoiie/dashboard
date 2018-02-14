@@ -1,7 +1,8 @@
 .flex-container {
     display: flex;
     flex-flow: column wrap;
-    height: 80vh;
+    height: 56vh;
+    width: 100vw;
 }
 
 .flex-item {
@@ -9,7 +10,6 @@
     margin-right: 2px;
     display: flex;
     min-height: 100px;
-    /* Would use just `height` but Firefox is weird */
     flex: 0 0 auto;
     width: 25%;
 }

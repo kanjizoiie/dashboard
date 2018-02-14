@@ -12,7 +12,7 @@ export class App extends Component {
     constructor(props) {
         super(props);
         this.state = {}
-        this.update = true;
+        this.update = false;
         this.count = 0;
     }
 
@@ -68,7 +68,15 @@ export class App extends Component {
             return (
                 <div className="app_wrapper">
                     <NavBar/>
-                    <StatusView />
+                    <Router>
+                        <div>
+                            <Switch>
+                                <Route exact path='/news' component = { NewsView } />
+                                <Route exact path='/status' component = { StatusView } />
+                                <Route component = { NotFound } />
+                            </Switch>
+                        </div>
+                    </Router>
                 </div>
             )
         }
