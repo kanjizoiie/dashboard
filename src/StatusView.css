@@ -1,14 +1,9 @@
-.status {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+#slacklogo {
+    width: 12em;
 }
-
-.circle {
-	border-radius: 50%;
-	width: 12px;
-    height: 12px;
-    display: inline-block;
+.status {
+    margin-top: 0px;
+    margin-bottom: 0px;
 }
 
 .green {

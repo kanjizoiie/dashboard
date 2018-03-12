@@ -5,13 +5,12 @@ import './Article.css';
 export class Article extends Component {
     render() {
         return (
-            <Card className = { this.props.className }>
-                <CardImg />
+            <Card className = { this.props.className } >
                 <CardBody>
+                    <CardText className = 'greytext'> { this.props.pubDate }</CardText>
                     <CardTitle> { this.props.title } </CardTitle>
                     <CardText> { this.props.description } </CardText>
-                    <hr />
-                    <CardText> Published: { this.props.pubDate } <a target = '_blank' className = 'float-right' href = { this.props.link }> Read More</a></CardText>
+
                 </CardBody>
             </Card>
         );

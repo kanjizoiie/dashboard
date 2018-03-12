@@ -1,14 +1,19 @@
 import React, { Component } from 'react';
-import { Container, Row, Col } from 'reactstrap';
+import { Container, Card, CardTitle, CardBody, Row, Col } from 'reactstrap';
 import axios from 'axios';
 import emoji from 'node-emoji';
 import './StatusView.css'
-var host = require('./host.json')
+import slackLogo from './Slack_Monochrome_White.svg';
+
+var host = require('./json/host.json')
 
 export class StatusView extends Component {
     constructor(props) {
         super(props);
-        this.state = { status: [] }
+        this.state = { status: {
+            active: [],
+            away: []
+        }}
     }
         
     componentDidMount() {
@@ -22,6 +27,7 @@ export class StatusView extends Component {
     getData() {
         axios.get('http://' + host.ip + ':' + host.port + '/api/data/status')
         .then((response) => {
+            console.log(response.data)
             this.setState(response.data);
         }).catch((reason) => {
             console.log(reason);
@@ -29,27 +35,47 @@ export class StatusView extends Component {
         this.timeOut = setTimeout(() => this.getData(), 45000);
     }
 
-    getDot(presence) {
-        if (presence == 'active')
-            return (<div className = 'circle green'></div>);
-        else
-            return (<div className = 'circle gray'></div>);
-    }
-
     render() {
-        if (this.state.status !== undefined) {
+        console.log(this.state)
+        if (this.state != undefined) {
             return (
-                <Container fluid>
-                        {
-                            this.state.status.map((comp, i) => {
-                                return (
-                                    <div className = 'status' key = { i }>
-                                        { this.getDot(comp[1].presence) }<h2> { emoji.emojify(comp[0].user.profile.real_name + ': ' + comp[0].user.profile.status_emoji + ' ' + comp[0].user.profile.status_text)  } </h2>
-                                    </div>
-                                )
-                            })
-                        }
-                </Container>
+                <section>
+                    <img id = 'slacklogo' src= { slackLogo } alt = 'SLACK' />
+                    <Row>
+                        <Col>                        
+                            <Card>
+                                <CardBody>                                
+                                    <CardTitle>Active:</CardTitle>
+                                    {
+                                        this.state.status.active.map((comp, i) => {
+                                            return (
+                                                <div className = 'status' key = { i }>
+                                                { emoji.emojify(comp[0].user.profile.real_name + ': ' + comp[0].user.profile.status_emoji + ' ' + comp[0].user.profile.status_text)  }
+                                                </div>
+                                            )
+                                        })
+                                    }
+                                </CardBody>
+                            </Card>
+                        </Col>
+                        <Col>
+                            <Card>
+                                <CardBody>                                
+                                    <CardTitle>Away:</CardTitle>
+                                    {
+                                        this.state.status.away.map((comp, i) => {
+                                            return (
+                                                <div className = 'status' key = { i }>
+                                                    { emoji.emojify(comp[0].user.profile.real_name + ': ' + comp[0].user.profile.status_emoji + ' ' + comp[0].user.profile.status_text)  }
+                                                </div>
+                                            )
+                                        })
+                                    }
+                                </CardBody>
+                            </Card>
+                        </Col>
+                    </Row>
+                </section>
             );
         }
     }

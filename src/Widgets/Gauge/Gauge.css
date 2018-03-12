@@ -1,0 +1,9 @@
+.background-arc {
+    fill: #DDDDDD;
+}
+.foreground-arc {
+    fill: #AFC33C;
+}
+.gauge-text {
+    font-size: 2em;
+}

@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Container, Row, Col } from 'reactstrap';
 import './NewsView.css';
 import { Article } from './Widgets/Article/Article'
-var host = require('./host.json')
+var host = require('./json/host.json')
 
 export class NewsView extends Component {
     constructor(props) {
@@ -30,11 +30,12 @@ export class NewsView extends Component {
     render() {
         if (this.state.news !== undefined) {
             return (
-                <Container fluid className = 'flex-container'>
+                <section className='flex-container'>
                         {
                             this.state.news.map((comp, i) => {
                                 return (
-                                    <Article className = 'flex-item' 
+                                    <Article
+                                    className = 'flex-item'
                                     key = { i }
                                     title = { comp.title } 
                                     description = { comp.description }
@@ -43,7 +44,7 @@ export class NewsView extends Component {
                                 )
                             })
                         }
-                </Container>
+                </section>
             );
         }
     }

@@ -7,11 +7,10 @@ export class Text extends Component {
     }
 
     render () {
-        if(this.props.value !== undefined) {
+        if(this.props.value != undefined) {
             return (
-                <div className = 'textWrapper'>
-                    <h3 className = 'textTitle'> { this.props.title } </h3>
-                    <h3 className = 'textValue'> { this.props.value } </h3> 
+                <div>
+                    <h3>{ this.props.value }</h3>
                 </div>
             )
         }

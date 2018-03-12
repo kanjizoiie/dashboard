@@ -11,10 +11,10 @@ export class Graph extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if(nextProps.update !== undefined) {
-            if(nextProps.update.data !== undefined && nextProps.update.layout !== undefined) {
+        if(nextProps.update != undefined) {
+            if(nextProps.update.data != undefined && nextProps.update.layout != undefined) {
                 Plotly.update(ReactDOM.findDOMNode(this), nextProps.update.data, nextProps.update.layout);
-            } else if(nextProps.update !== undefined) {
+            } else if(nextProps.update != undefined) {
                 Plotly.update(ReactDOM.findDOMNode(this), nextProps.update.data);
             }
         }

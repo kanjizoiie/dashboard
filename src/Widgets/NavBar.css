@@ -1,3 +1,15 @@
 nav {
     font-size: 1.75em;
 }
+
+.navbar {
+    background: #3f3f3f;
+}
+
+.slant {
+    display: block;
+    background: #3f3f3f;
+    height: 10px;
+    clip-path: polygon(0 0, 100% 0, 100% 15%, 0 100%);
+}
+

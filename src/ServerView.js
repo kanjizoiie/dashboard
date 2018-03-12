@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
-import { Container, Row, Col, Card } from 'reactstrap';
+import { Row, Col, Card, CardBody, CardTitle} from 'reactstrap';
 import { Up } from './Widgets/Up/Up';
 import { Text } from './Widgets/Text/Text';
 import { Graph } from './Widgets/Graph/Graph';
 import { ErrorMessages } from './Widgets/ErrorMessage/ErrorMessages';
 import { Spinner } from './Widgets/Spinner/Spinner';
+import { Gauge } from './Widgets/Gauge/Gauge';
+
 import axios from 'axios';
 import './ServerView.css';
-var graphs = require('./graphs.json');
-var host = require('./host.json')
+var graphs = require('./json/graphs.json');
+var host = require('./json/host.json');
 
 export class ServerView extends Component {
     constructor(props) {
@@ -47,61 +49,107 @@ export class ServerView extends Component {
     render() {
         if (this.state != undefined) {
             return (
-                <Container fluid>
-                    <Row className = 'mt-2'>
-                        <Col md = '12'>
-                            <h3>
-                                { this.state.info.hostname.toUpperCase() }
-                            </h3>
+                <section className = 'server-container'>
+                    <Row>
+                        <Col>
+                            <Card>
+                                <CardBody>
+                                    <CardTitle>
+                                        Hostname
+                                    </CardTitle>
+                                    <h3>
+                                        { this.state.info.hostname }
+                                    </h3>
+                                </CardBody>
+                            </Card>
                         </Col>
-                    </Row>
-                    <Row className = 'mt-2'>
-                        <Col className = 'flexcenter' md = '1'>
-                            <Up isUp = { this.state.info.up } />
+                        <Col>
+                            <Card>
+                                <CardBody>
+                                    <CardTitle>
+                                        Is this server active?
+                                    </CardTitle>
+                                    <Up isUp = { this.state.info.up } /> 
+                                </CardBody>
+                            </Card>
                         </Col>
-                        <Col className = 'flexcenter' md = '1'>
-                            <Text title = 'Uptime this month' value = { (this.state.info.uptime * 100).toFixed(1) + '%' } />
-                        </Col>
-                        <Col className = 'flexcenter' md = '2'>
-                            <Text title = 'Users Today' value = { (this.state.info.users) } />
-                        </Col>
-                        <Col className = 'flexcenter' md = '7'>
-                            <ErrorMessages messages = { this.state.info.alerts } />
-                        </Col>
-                    </Row>
-                    <Row className = 'mt-5'>
-                        <Col md = '6'>
-                            <Graph 
-                                update = {{
-                                    data: {
-                                    y: [ this.state.graph.server.cpu, this.state.graph.server.mem],
-                                    x: [ this.state.graph.server.time,  this.state.graph.server.time]
-                                }}}
-                                data = { graphs.server.data }
-                                layout = { graphs.server.layout }
-                            />
-                        </Col>
-                        <Col md = '6'>
-                            <Graph
-                                update = {{
-                                    data: {
-                                    y: [ this.state.graph.traffic.in, this.state.graph.traffic.out],
-                                    x: [ this.state.graph.traffic.time,  this.state.graph.traffic.time ]
-                                }}}
-                                data = { graphs.traffic.data }
-                                layout = { graphs.traffic.layout }
-                            />
+                        <Col>
+                            <Card>
+                                <CardBody>
+                                    <CardTitle>
+                                        New users today
+                                    </CardTitle>
+                                    <Text value = { (this.state.info.users) } />
+                                </CardBody>
+                            </Card>
                         </Col>
                     </Row>
                     <Row>
-                        <Col md = '12'>
-                            <Graph
-                                data = { graphs.http.data }
-                                layout = { graphs.http.layout }
-                            />
+                        <Col>                        
+                            <Card>
+                                <CardBody>
+                                    <CardTitle>
+                                        Usage
+                                    </CardTitle>
+                                    <Graph 
+                                        update = {{
+                                            data: {
+                                                y: [ this.state.graph.server.cpu, this.state.graph.server.mem],
+                                                x: [ this.state.graph.server.time,  this.state.graph.server.time]
+                                            },
+                                            layout: {
+
+                                            }
+                                        }}
+                                        data = { graphs.server.data }
+                                        layout = { graphs.server.layout }
+                                    />
+                                </CardBody>
+                            </Card>
+                        </Col>
+                        <Col>
+                            <Card>
+                                <CardBody>
+                                    <CardTitle>
+                                        Traffic
+                                    </CardTitle>
+                                    <Graph
+                                        update = {{
+                                            data: {
+                                                y: [ this.state.graph.traffic.in, this.state.graph.traffic.out],
+                                                x: [ this.state.graph.traffic.time,  this.state.graph.traffic.time ]
+                                            }
+                                        }}
+                                        data = { graphs.traffic.data }
+                                        layout = { graphs.traffic.layout }
+                                    />
+                                </CardBody>
+                            </Card>
                         </Col>
                     </Row>
-                </Container>
+                    <Row>
+                        <Col>
+                            <Card>
+                                <CardBody>
+                                    <CardTitle>
+                                        Uptime this month
+                                    </CardTitle>
+                                    <Gauge percent = {(this.state.info.uptime)} />
+                                </CardBody>
+                            </Card>    
+                        </Col>
+                        <Col>
+                            <Card>
+                                <CardBody>
+                                    <CardTitle>
+                                        Alerts
+                                    </CardTitle>
+                                    <ErrorMessages messages = { this.state.info.alerts } />
+                                </CardBody>
+                            </Card>
+                        </Col>
+                    </Row>
+                </section>
             );
         }
         else {

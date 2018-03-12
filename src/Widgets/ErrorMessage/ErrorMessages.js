@@ -14,8 +14,8 @@ export class ErrorMessages extends Component {
                     {
                         this.props.messages.map((comp, i) => {
                             return (
-                            <ListGroupItem color = { comp.alert.severity }>
-                                <codeString className = 'font-weight-bold'>{comp.alert.code}</codeString>: { comp.alert.message }
+                            <ListGroupItem color = { comp.severity }>
+                                <text className = 'font-weight-bold'>{comp.code}</text>: { comp.message } - <text className = 'font-weight-bold'>{ comp.insertionDate }</text>
                             </ListGroupItem>
                             )
                         })

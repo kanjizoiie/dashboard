@@ -18,6 +18,27 @@ rectangle Dashboard <<Shows collected data>>{
 }
 @enduml
 
+@startuml usecase_slackstatus
+'Settings
+left to right direction
+skinparam packageStyle rectangle
+
+
+'Create the rectangle and Endpoint.
+actor Colleague <<Child Care>>
+actor User <<Thinks colleague is missing>>
+actor Endpoint <<Backend>>
+
+rectangle Dashboard <<Shows collected data>> {
+    Colleague -- User : Sees that colleague is at home with a sick child
+    User -- (SlackStatusView) : Looks at
+    (ServerView) -- Endpoint : Fetches data
+    (NewsView) -- Endpoint : Fetches data
+    (SlackStatusView) -- Endpoint : Fetches data
+}
+@enduml
+
+
 @startuml usecase_weather
 'Settings
 left to right direction
@@ -25,7 +46,7 @@ skinparam packageStyle rectangle
 
 
 'Create the rectangle and Endpoint.
-actor User <<Makes choice to get lunch>>
+actor User <<Makes choice to eat lunch out>>
 actor Endpoint <<Backend>>
 
 rectangle dashboard <<Shows collected data>>{
@@ -54,6 +75,7 @@ split again
     while (app.listen())
         if (Request route?) then (yes)
             :Serve route;
+            :Perform route specific work;
         else (no)
         endif
     endwhile

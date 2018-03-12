@@ -3,7 +3,7 @@ import './Clock.css'
 import moment from 'moment';
 
 
-let options = require('../../options.json');
+let options = require('../../json/options.json');
 
 export class Clock extends Component {
     constructor(props) {
@@ -30,7 +30,7 @@ export class Clock extends Component {
     render() {
         return(
             <div className = 'clock'>
-                { this.state.date.format(options.clock.format) }
+                <rsgreen>{ this.state.date.format(options.clock.format) }</rsgreen>
             </div>
         )   
     }

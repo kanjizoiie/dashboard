@@ -1,29 +1,36 @@
 import React, { Component } from 'react';
-import up from './up.svg';
-import down from './down.svg';
-import semi from './semi.svg';
+import axios from 'axios';
 import './Up.css';
 
+let host = require('../../json/host.json');
+
 export class Up extends Component {
-    render() {
+    serverStatus() {
         if (this.props.isUp == 2) {
+            axios.get('http://' + host.ip + ':' + host.port + '/api/lights/green');
             return(
-                <img className = 'up' src = { up } alt = 'ITS UP'/>
+                <h3 className = 'up-green'>Yes</h3>
             );
         }
         else if (this.props.isUp == 1) {
+            axios.get('http://' + host.ip + ':' + host.port + '/api/lights/yellow');
             return (
-                <img className = 'semi' src = { semi } alt = 'SOMETHINGS UP'/>
+                <h3 className = 'up-yellow'>Maybe</h3>
             );
         }
         else if (this.props.isUp == 0) {
+            axios.get('http://' + host.ip + ':' + host.port + '/api/lights/red');
             return (
-                <img className = 'down' src = { down } alt = 'ITS DOWN'/>
+                <h3 className = 'up-red'>NO NO NO! Houston we got a problem!!</h3>
             );
         }
-        else {
-            return null;
-        }
+    }
+    render() {
+        return (
+            <div>
+                By my calculations: { this.serverStatus() }
+            </div>
+        )
     }
 }
 

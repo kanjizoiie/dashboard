@@ -1,15 +1,11 @@
 .flex-container {
     display: flex;
-    flex-flow: column wrap;
-    height: 56vh;
-    width: 100vw;
+    flex-flow: row wrap;
+    width: 100%;
 }
 
 .flex-item {
     margin-top: 2px;
     margin-right: 2px;
-    display: flex;
-    min-height: 100px;
-    flex: 0 0 auto;
-    width: 25%;
+    width: 24%;
 }
