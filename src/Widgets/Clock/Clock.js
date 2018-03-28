@@ -30,7 +30,7 @@ export class Clock extends Component {
     render() {
         return(
             <div className = 'clock'>
-                <rsgreen>{ this.state.date.format(options.clock.format) }</rsgreen>
+                <p className='rs-green'>{ this.state.date.format(options.clock.format) }</p>
             </div>
         )   
     }

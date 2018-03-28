@@ -4,7 +4,6 @@ import { NavBar } from './Widgets/NavBar';
 import { ServerView } from './ServerView';
 import { NewsView } from './NewsView';
 import { NotFound } from './NotFound';
-import { setTimeout } from 'timers';
 import { StatusView } from './StatusView';
 import axios from 'axios';
 
@@ -22,30 +21,39 @@ export class App extends Component {
 
     componentDidMount() {
         this.views = [];
+
+        
         axios.get('http://' + host.ip + ':' + host.port + '/api/data/server')
         .then((response) => {
             if (response.data[1].length != 0) {
                 response.data[1].forEach((value) => {
-                    this.views.push(<ServerView id = { value.id } ></ServerView>);
+                    this.views.push({ view:<ServerView id = { value.id } ></ServerView>, dur: 10000 });
                 })
-                return null;
             }
             else {
                 response.data[0].forEach((value) => {
+                    console.log(value.id)
                     this.views.push({
-                        view: <ServerView id = { value } ></ServerView>, dur: 5000
+                        view: <ServerView id = { value.id } ></ServerView>, dur: 10000, title: ''
                     });
                 })
             }
         })
         .then((arr) => {
+            let newstitle = ''
+            axios.get('http://' + host.ip + ':' + host.port + '/api/data/news/channel')
+            .then((response) => {
+                console.log(response)
+                newstitle = response.data.title;
+            }).then(() => {
                 this.views.push({
-                    view: <NewsView></NewsView>, dur: 20000
+                    view: <NewsView></NewsView>, dur: 20000, title: newstitle
                 });
+            })
         })
         .then((arr) => {
                 this.views.push({
-                    view: <StatusView></StatusView>, dur: 20000
+                    view: <StatusView></StatusView>, dur: 20000,  title: 'Slack'
                 });
         }).then(() => {
             this.spinningSystem();  
@@ -60,7 +68,8 @@ export class App extends Component {
         if (this.update) {
             //Update the state.
             this.setState({
-                current: this.views[this.count].view
+                current: this.views[this.count].view,
+                title: this.views[this.count].title
             })
             this.timeOut = setTimeout(() => this.spinningSystem(), this.views[this.count].dur);
             //Increase the current position.
@@ -75,7 +84,7 @@ export class App extends Component {
         if (this.update) {
             return (
                 <div className='app-wrapper'>
-                    <NavBar/>
+                    <NavBar title = { this.state.title } />
                     <div className = 'content'>
                         { this.state.current }
                     </div>
@@ -92,6 +101,7 @@ export class App extends Component {
                             <Switch>
                                 <Route exact path='/news' component = { NewsView } />
                                 <Route exact path='/status' component = { StatusView } />
+                                <Route exact path='/server' component = {(props) => { return <ServerView id = {3} ></ServerView> }} />
                                 <Route component = { NotFound } />
                             </Switch>
                         </div>

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Container, Row, Col } from 'reactstrap';
+import {Spinner} from './Widgets/Spinner/Spinner';
 import './NewsView.css';
 import { Article } from './Widgets/Article/Article'
 var host = require('./json/host.json')
@@ -24,27 +25,34 @@ export class NewsView extends Component {
         }).catch((reason) => {
             console.log(reason);
         });
-        this.timeOut = setTimeout(() => this.getData(), 2000);
+        this.timeOut = setTimeout(() => this.getData(), 5000);
     }
 
     render() {
-        if (this.state.news !== undefined) {
+        if (this.state.news != undefined) {
             return (
                 <section className='flex-container'>
-                        {
-                            this.state.news.map((comp, i) => {
-                                return (
-                                    <Article
-                                    className = 'flex-item'
-                                    key = { i }
-                                    title = { comp.title } 
-                                    description = { comp.description }
-                                    pubDate = { comp.pubDate } 
-                                    link = { comp.link } />
-                                )
-                            })
-                        }
+                    {
+                        this.state.news.map((comp, i) => {
+                            return (
+                                <Article
+                                className = 'flex-item'
+                                key = { i }
+                                title = { comp.title } 
+                                description = { comp.description }
+                                pubDate = { comp.pubDate } 
+                                link = { comp.link } />
+                            )
+                        })
+                    }
                 </section>
+            );
+        }
+        else {
+            return (
+                <div className = 'flexcenter mt-5'>
+                    <Spinner/>
+                </div>
             );
         }
     }

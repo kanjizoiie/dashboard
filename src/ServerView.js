@@ -43,7 +43,7 @@ export class ServerView extends Component {
                 graph: values[1]
             });
         });
-        this.timeOut = setTimeout(() => this.getData(), 2000);
+        this.timeOut = setTimeout(() => this.getData(), 4000);
     }
 
     render() {
@@ -58,7 +58,7 @@ export class ServerView extends Component {
                                         Hostname
                                     </CardTitle>
                                     <h3>
-                                        { this.state.info.hostname }
+                                        {this.state.info ? <Text value = { (this.state.info.hostname.hostname) } /> : null }
                                     </h3>
                                 </CardBody>
                             </Card>
@@ -69,7 +69,7 @@ export class ServerView extends Component {
                                     <CardTitle>
                                         Is this server active?
                                     </CardTitle>
-                                    <Up isUp = { this.state.info.up } /> 
+                                    {this.state.info ? <Up isUp = { this.state.info.up } /> : null }
                                 </CardBody>
                             </Card>
                         </Col>
@@ -79,7 +79,7 @@ export class ServerView extends Component {
                                     <CardTitle>
                                         New users today
                                     </CardTitle>
-                                    <Text value = { (this.state.info.users) } />
+                                    { this.state.info.users ? <Text value = { (this.state.info.users) } /> : null }
                                 </CardBody>
                             </Card>
                         </Col>
@@ -91,16 +91,14 @@ export class ServerView extends Component {
                                     <CardTitle>
                                         Usage
                                     </CardTitle>
-                                    <Graph 
-                                        update = {{
+                                    <Graph
+                                        update = {
+                                        this.state.graph ? {
                                             data: {
                                                 y: [ this.state.graph.server.cpu, this.state.graph.server.mem],
                                                 x: [ this.state.graph.server.time,  this.state.graph.server.time]
-                                            },
-                                            layout: {
-
                                             }
-                                        }}
+                                        } : undefined }
                                         data = { graphs.server.data }
                                         layout = { graphs.server.layout }
                                     />
@@ -114,12 +112,13 @@ export class ServerView extends Component {
                                         Traffic
                                     </CardTitle>
                                     <Graph
-                                        update = {{
+                                        update = {
+                                        this.state.graph ? {
                                             data: {
                                                 y: [ this.state.graph.traffic.in, this.state.graph.traffic.out],
                                                 x: [ this.state.graph.traffic.time,  this.state.graph.traffic.time ]
                                             }
-                                        }}
+                                        } : undefined}
                                         data = { graphs.traffic.data }
                                         layout = { graphs.traffic.layout }
                                     />
@@ -134,7 +133,7 @@ export class ServerView extends Component {
                                     <CardTitle>
                                         Uptime this month
                                     </CardTitle>
-                                    <Gauge percent = {(this.state.info.uptime)} />
+                                    { this.state.info.uptime ? <Gauge percent = {(this.state.info.uptime)} size = {{ sm: 'auto' }}/> : null }
                                 </CardBody>
                             </Card>    
                         </Col>

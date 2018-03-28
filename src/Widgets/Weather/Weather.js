@@ -34,7 +34,7 @@ export class Weather extends Component {
         if (this.state.data !== undefined && this.state.data.main !== undefined) {
             return(
                 <div>
-                    <rsgreen>{this.state.data.name}: { this.state.data.main.temp } ° C</rsgreen>
+                    <p className='rs-green'>{this.state.data.name}: { this.state.data.main.temp } ° C</p>
                 </div>
             )
         } else {

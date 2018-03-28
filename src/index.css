@@ -1,22 +1,23 @@
 * {
   font-family: 'Open Sans', sans-serif;
+  color: #DDDDDD
 }
 
 body {
   margin: 0;
   padding: 0;
-  background: #848588;
+  background: #000;
 }
 
 html, body, #root, .app_wrapper {
   height: 100%;
 }
 
-rsgreen {
+.rs-green {
   color: #AFC33C;
 }
 
-rsgray {
+.rs-gray {
   color: #848588;
 }
 
@@ -29,4 +30,8 @@ rsgray {
   background: #3f3f3f;
   height: 30px;
   clip-path: polygon(0 50%, 100% 0, 100% 100%, 0 100%);
+}
+
+.card {
+  background: #222222;
 }

@@ -12,12 +12,15 @@ export class NavBar extends Component {
         return (
             <div>
                 <Navbar dark expand='sm'>
-                    <NavbarBrand className='ml-5' href='/'><img src= { options.logo } alt = 'logo' height = '32' /></NavbarBrand>
-                    <Nav navbar className='ml-auto'>
+                    <NavbarBrand className='ml-5 p-0 mx-auto' href='/'><img src= { options.logo } alt = 'logo' height = '32' /></NavbarBrand>
+                    <NavItem className='navbar-text mr-5'>
+                            { this.props.title }
+                    </NavItem>
+                    <Nav navbar className='ml-auto p-0'>
                         <NavItem className='navbar-text mr-5'>
                             <Weather />
                         </NavItem>
-                        <NavItem className='navbar-text mr-5'>
+                        <NavItem className='navbar-text mr-5 d-inline-block'>
                             <DateC />
                         </NavItem>
                         <NavItem className='navbar-text mr-5'>

@@ -32,7 +32,7 @@ export class DateC extends Component {
     render() {
         return(
             <div className = 'date'>
-                <rsgreen>{ this.state.date.format(options.date.format) }</rsgreen>    
+                <p className='rs-green'>{ this.state.date.format(options.date.format) }</p>    
             </div>
         )
     }

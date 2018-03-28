@@ -19,7 +19,7 @@ export class Gauge extends Component {
             .duration(750)
             .attrTween('d', this.arcTween(nextProps.percent * this.tau));
         this.text.text(
-            (nextProps.percent * 100).toFixed(1) + ' %'
+            (nextProps.percent * 100).toFixed(1) + '%'
         );
     }
 
@@ -42,7 +42,7 @@ export class Gauge extends Component {
             .outerRadius(80)
             .startAngle(0);
 
-        let svg = d3.select('svg'),
+        let svg = d3.select(ReactDOM.findDOMNode(this)),
             width = +svg.attr('width'),
             height = +svg.attr('height'),
             g = svg.append('g').attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
