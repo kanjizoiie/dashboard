@@ -14,10 +14,7 @@ export class DateC extends Component {
     }
 
     componentDidMount() {
-        this.timerInterval = setInterval(
-            () => this.tick(),
-            options.date.speed
-        );
+        this.timerInterval = setInterval(() => this.tick(), options.date.interval);
     }
     componentWillUnmount() {
         clearInterval(this.timerInterval);

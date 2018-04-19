@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { NavBar } from './Widgets/NavBar';
 import { ServerView } from './ServerView';
 import { NewsView } from './NewsView';
@@ -9,7 +9,7 @@ import axios from 'axios';
 
 import './App.css';
 
-var host = require('./json/host.json')
+var options = require('./json/options.json')
 
 export class App extends Component {
     constructor(props) {
@@ -21,39 +21,35 @@ export class App extends Component {
 
     componentDidMount() {
         this.views = [];
-
-        
-        axios.get('http://' + host.ip + ':' + host.port + '/api/data/server')
+        axios.get('http://' + options.host.ip + ':' + options.host.port + '/api/data/server')
         .then((response) => {
             if (response.data[1].length != 0) {
                 response.data[1].forEach((value) => {
-                    this.views.push({ view:<ServerView id = { value.id } ></ServerView>, dur: 10000 });
+                    this.views.push({ view:<ServerView id = { value.id } ></ServerView>, dur: options.serverDuration });
                 })
             }
             else {
                 response.data[0].forEach((value) => {
-                    console.log(value.id)
                     this.views.push({
-                        view: <ServerView id = { value.id } ></ServerView>, dur: 10000, title: ''
+                        view: <ServerView id = { value.id } ></ServerView>, dur: options.serverDuration, title: ''
                     });
                 })
             }
         })
         .then((arr) => {
             let newstitle = ''
-            axios.get('http://' + host.ip + ':' + host.port + '/api/data/news/channel')
+            axios.get('http://' + options.host.ip + ':' + options.host.port + '/api/data/news/channel')
             .then((response) => {
-                console.log(response)
                 newstitle = response.data.title;
             }).then(() => {
                 this.views.push({
-                    view: <NewsView></NewsView>, dur: 20000, title: newstitle
+                    view: <NewsView></NewsView>, dur: options.newsDuration, title: newstitle
                 });
             })
         })
         .then((arr) => {
                 this.views.push({
-                    view: <StatusView></StatusView>, dur: 20000,  title: 'Slack'
+                    view: <StatusView></StatusView>, dur: options.statusDuration,  title: 'Slack'
                 });
         }).then(() => {
             this.spinningSystem();  

@@ -23,6 +23,8 @@
     border-style: solid;
     border-color: #AFC33C #AFC33C transparent;
 
+    display: inline-block;
+
     animation-name: spin;
     animation-iteration-count: infinite;
     animation-timing-function: linear;

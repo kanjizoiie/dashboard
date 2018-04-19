@@ -3,7 +3,6 @@ import axios from 'axios';
 import { Spinner } from '../Spinner/Spinner';
 import './Weather.css';
 let options = require('../../json/options.json');
-var host = require('../../json/host.json')
 
 export class Weather extends Component {
     constructor(props) {
@@ -17,7 +16,7 @@ export class Weather extends Component {
     }
 
     getWeather() {(
-        axios.get('http://' + host.ip + ':' + host.port + '/api/data/weather').then((response) => {
+        axios.get('http://' + options.host.ip + ':' + options.host.port + '/api/data/weather').then((response) => {
             this.setState({
                 data: response.data
             });

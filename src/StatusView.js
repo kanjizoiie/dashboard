@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { Container, Card, CardTitle, CardBody, Row, Col } from 'reactstrap';
+import { Card, CardTitle, CardBody, Row, Col } from 'reactstrap';
 import {Spinner} from './Widgets/Spinner/Spinner';
 import axios from 'axios';
 import emojione from 'emojione';
 import './StatusView.css'
 
-var host = require('./json/host.json')
+var options = require('./json/options.json')
 
 export class StatusView extends Component {
     constructor(props) {
@@ -25,7 +25,7 @@ export class StatusView extends Component {
     }
 
     getData() {
-        axios.get('http://' + host.ip + ':' + host.port + '/api/data/status')
+        axios.get('http://' + options.host.ip + ':' + options.host.port + '/api/data/status')
         .then((response) => {
             this.setState(response.data);
         }).catch((reason) => {

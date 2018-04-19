@@ -4,7 +4,7 @@ import { Container, Row, Col } from 'reactstrap';
 import {Spinner} from './Widgets/Spinner/Spinner';
 import './NewsView.css';
 import { Article } from './Widgets/Article/Article'
-var host = require('./json/host.json')
+var options = require('./json/options.json')
 
 export class NewsView extends Component {
     constructor(props) {
@@ -20,7 +20,7 @@ export class NewsView extends Component {
     }
 
     getData() {
-        axios.get('http://' + host.ip + ':' + host.port + '/api/data/news/').then((response) => {
+        axios.get('http://' + options.host.ip + ':' + options.host.port + '/api/data/news/').then((response) => {
             this.setState(response.data);
         }).catch((reason) => {
             console.log(reason);

@@ -14,7 +14,7 @@ export class Clock extends Component {
     }
 
     componentDidMount() {
-        this.timerInterval = setInterval(() => this.getTime(), options.clock.speed);
+        this.timerInterval = setInterval(() => this.getTime(), options.clock.interval);
     }
     
     componentWillUnmount() {

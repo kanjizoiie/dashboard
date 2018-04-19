@@ -6,14 +6,13 @@ import * as d3 from 'd3';
 import './Gauge.css';
 
 export class Gauge extends Component {
-    constructor(props) {
-        super(props);
-    }
-
+    
+    //Never let react update this component.
     shouldComponentUpdate (nextProps, nextState) {
         return false;
     }
 
+    //If the component recieves props animate the gauge.
     componentWillReceiveProps(nextProps) {
         this.foreground.transition()
             .duration(750)
@@ -42,22 +41,25 @@ export class Gauge extends Component {
             .outerRadius(80)
             .startAngle(0);
 
+        //Find the svg instance.
         let svg = d3.select(ReactDOM.findDOMNode(this)),
             width = +svg.attr('width'),
             height = +svg.attr('height'),
             g = svg.append('g').attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
 
+        //Create the text inside the arcs
         this.text = g.append('text')
             .attr('class', 'gauge-text')
             .attr('dy', '0.35em')
             .style('text-anchor', 'middle');
 
+        //Create the background arc
         this.background = g.append('path').attr('class', 'background-arc')
             .datum({
                 endAngle: this.tau
             })
             .attr('d', this.arc);
-
+        //Create the foreground arc
         this.foreground = g.append('path').attr('class', 'foreground-arc')
             .datum({
                 endAngle: 0 * this.tau
@@ -65,6 +67,7 @@ export class Gauge extends Component {
             .attr('d', this.arc);
     }
 
+    //Creates the tween for the animation
     arcTween(newAngle, delay) {
         return (d) => { 
             var interpolate = d3.interpolate(d.endAngle, newAngle);

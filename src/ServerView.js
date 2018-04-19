@@ -10,7 +10,7 @@ import { Gauge } from './Widgets/Gauge/Gauge';
 import axios from 'axios';
 import './ServerView.css';
 var graphs = require('./json/graphs.json');
-var host = require('./json/host.json');
+var options = require('./json/options.json');
 
 export class ServerView extends Component {
     constructor(props) {
@@ -27,12 +27,12 @@ export class ServerView extends Component {
 
     getData() {
         Promise.all([
-            axios.get('http://' + host.ip + ':' + host.port + '/api/data/server/' + this.props.id).then((response) => {
+            axios.get('http://' + options.host.ip + ':' + options.host.port + '/api/data/server/' + this.props.id).then((response) => {
                 return response.data;
             }).catch((reason) => {
                 console.log(reason);
             }),
-            axios.get('http://' + host.ip + ':' + host.port + '/api/data/server/' + this.props.id + '/graph').then((response) => {
+            axios.get('http://' + options.host.ip + ':' + options.host.port + '/api/data/server/' + this.props.id + '/graph').then((response) => {
                 return response.data;
             }).catch((reason) => {
                 console.log(reason);
